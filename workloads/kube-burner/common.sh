@@ -19,7 +19,7 @@ else
   fi
 fi
 export TOLERATIONS="[{key: role, value: workload, effect: NoSchedule}]"
-export UUID=${UUID:-$(uuidgen)}
+export UUID=${UUID:-$(uuidgen | head -c8 | tr '[:upper:]' '[:lower:]')-node-density-$(date '+%Y%m%d')}
 export OPENSHIFT_VERSION=$(oc version -o json | jq -r '.openshiftVersion') 
 export NETWORK_TYPE=$(oc get network.config/cluster -o jsonpath='{.status.networkType}') 
 
@@ -211,13 +211,13 @@ label_node_with_label() {
   colon_param=$(echo $1 | tr "=" ":" | sed 's/:/: /g')
   export POD_NODE_SELECTOR="{$colon_param}"
   if [[ -z $NODE_COUNT ]]; then
-    NODE_COUNT=$(oc get node -o name --no-headers -l node-role.kubernetes.io/workload!="",node-role.kubernetes.io/infra!="",node-role.kubernetes.io/worker= | wc -l )
+    NODE_COUNT=$(oc get node -o name --no-headers -l kubernetes.io/os=windows | wc -l )
   fi
   if [[ ${NODE_COUNT} -le 0 ]]; then
     log "Node count <= 0: ${NODE_COUNT}"
     exit 1
   fi
-  WORKER_NODE_NAMES=$(oc get node -o custom-columns=name:.metadata.name --no-headers -l node-role.kubernetes.io/workload!="",node-role.kubernetes.io/infra!="",node-role.kubernetes.io/worker= | head -n ${NODE_COUNT})
+  WORKER_NODE_NAMES=$(oc get node -o custom-columns=name:.metadata.name --no-headers -l kubernetes.io/os=windows | head -n ${NODE_COUNT})
   if [[ $(echo "${WORKER_NODE_NAMES}" | wc -l) -lt ${NODE_COUNT} ]]; then
     log "Not enough worker nodes to label"
     exit 1
