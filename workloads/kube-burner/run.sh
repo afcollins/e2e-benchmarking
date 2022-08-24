@@ -18,7 +18,7 @@ case ${WORKLOAD} in
     INDEXING="false"
     POD_NODE_SELECTOR=${POD_NODE_SELECTOR:-'{kubernetes.io/os: windows}'}
     METRICS_PROFILE=${METRICS_PROFILE:-metrics-profiles/metrics.yaml}
-    NODE_COUNT=${NODE_COUNT:-$(kubectl get node -l kubernetes.io/os=windows,node-role.kubernetes.io/workload!= -o name | wc -l)}
+    NODE_COUNT=${NODE_COUNT:-$(kubectl get node -l ${POD_WORKLOAD_LABEL_SELECTOR},node-role.kubernetes.io/infra!=,node-role.kubernetes.io/workload!= -o name | wc -l)}
     PODS_PER_NODE=${PODS_PER_NODE:-245}
     label="node-density=enabled"
     label_node_with_label $label
