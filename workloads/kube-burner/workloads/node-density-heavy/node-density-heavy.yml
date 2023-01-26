@@ -86,7 +86,7 @@ jobs:
       - objectTemplate: app-deployment.yml
         replicas: 1
         inputVars:
-          readinessPeriod: 10
+          readinessPeriod: 1
           livenessPeriod: 10
           nodeSelector: "{{.POD_NODE_SELECTOR}}"
 

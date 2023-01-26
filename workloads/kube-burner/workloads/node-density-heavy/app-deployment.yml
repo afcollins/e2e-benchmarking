@@ -19,16 +19,16 @@ spec:
             port: 8080
           periodSeconds: {{ .readinessPeriod }}
           failureThreshold: 1
-          timeoutSeconds: 60
-          initialDelaySeconds: 30
+          timeoutSeconds: 10
+          initialDelaySeconds: 4
         livenessProbe:
           httpGet:
             path: /health
             port: 8080
           periodSeconds: {{ .livenessPeriod }}
           failureThreshold: 1
-          timeoutSeconds: 15
-          initialDelaySeconds: 30
+          timeoutSeconds: 10
+          initialDelaySeconds: 10
         resources:
           requests:
             memory: "10Mi"
