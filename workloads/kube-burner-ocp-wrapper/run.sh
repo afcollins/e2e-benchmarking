@@ -14,7 +14,7 @@ UUID=${UUID:-$(uuidgen)}
 KUBE_DIR=${KUBE_DIR:-/tmp}
 
 download_binary(){
-  KUBE_BURNER_URL=https://github.com/afcollins/kube-burner/releases/download/v0.407.1/kube-burner-V0.407.1-linux-x86_64.tar.gz
+  KUBE_BURNER_URL=https://github.com/afcollins/kube-burner/releases/download/v0.407.2/kube-burner-V0.407.2-linux-x86_64.tar.gz
   curl -sS -L ${KUBE_BURNER_URL} | tar -xzC ${KUBE_DIR}/ kube-burner
 }
 
