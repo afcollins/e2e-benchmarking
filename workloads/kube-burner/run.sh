@@ -1,5 +1,6 @@
 #!/bin/bash
 
+. winc-env.sh
 . common.sh
 . build_helper.sh
 
